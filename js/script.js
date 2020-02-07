@@ -366,10 +366,10 @@ ready(() => {
             });
     }
 
-    loadData('../data/data.json', 'main_text', '#main_text');
-    loadData('../data/data.json', 'main_desc', '#main_desc');
-    loadData('../data/data.json', 'course-1-text', '#course-1-text');
-    loadData('../data/data.json', 'course-2-text', '#course-2-text');
-    loadData('../data/data.json', 'course-3-text', '#course-3-text');
-    loadData('../data/data.json', 'course-4-text', '#course-4-text');
+    loadData('http://geniusx.uz/data/data.json', 'main_text', '#main_text');
+    loadData('http://geniusx.uz/data/data.json', 'main_desc', '#main_desc');
+    loadData('http://geniusx.uz/data/data.json', 'course-1-text', '#course-1-text');
+    loadData('http://geniusx.uz/data/data.json', 'course-2-text', '#course-2-text');
+    loadData('http://geniusx.uz/data/data.json', 'course-3-text', '#course-3-text');
+    loadData('http://geniusx.uz/data/data.json', 'course-4-text', '#course-4-text');
 });
