@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <base href="http://geniusx.uz/"> -->
+    <title>Genius</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Fonts -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' />
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2:400,500,600&display=swap" rel="stylesheet">
+
+    <!-- Css styles -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css'rel='stylesheet' />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="./css/general.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
+    <link href="./css/header.css" rel="stylesheet">
+    <script>
+        const checkSupport = () => {
+            var html = document.documentElement,
+                WebP = new Image();
+
+            WebP.onload = WebP.onerror = function () {
+                isSupported = (WebP.height === 2);
+
+                if (isSupported) {
+                    if (html.className.indexOf('no-webp') >= 0) {
+                        html.className = html.className.replace(/\bno-webp\b/, 'webp');
+                    } else {
+                        html.className += ' webp';
+                    }
+                }
+            };
+            WebP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+        }
+
+        checkSupport();
+    </script>
+</head>
+
+<body>
+
+    <div class="modal call-order">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <form action="/" class="form">
+                <h2 class="modal-heading">Оставить заявку</h2>
+                <input class="modal-input-name" type="text" name="name" placeholder="Ваше имя" required="true">
+                <input class="modal-input-phone" type="tel" name="phone" placeholder="Ваш номер" required="true">
+                <input type="hidden" name="hidden" value="">
+                <input class="modal-submit btn-primary" type="submit" value="Отправить">
+            </form>
+            <div class="done">
+                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTEuOTk5IDUxMS45OTkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMS45OTkgNTExLjk5OTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIHN0eWxlPSJmaWxsOiNBNUVCNzg7IiBkPSJNNDI3LjUzNCw3My4wODRsLTIyNC41MSwyMjQuNTFjLTYuMDUxLDYuMDUxLTE1Ljg2Myw2LjA1MS0yMS45MTQsMGwtOTYuNjQ1LTk2LjY0NUw4LjA5OSwyNzcuMzEzICBsMTQ1Ljc4NSwxNDUuNzg1YzEwLjEyNywxMC4xMjcsMjMuODYyLDE1LjgxNiwzOC4xODMsMTUuODE2bDAsMGMxNC4zMiwwLDI4LjA1Ny01LjY5LDM4LjE4Mi0xNS44MTZsMjczLjY1LTI3My42NUw0MjcuNTM0LDczLjA4NHoiLz4KPGcgc3R5bGU9Im9wYWNpdHk6MC4xOyI+Cgk8cGF0aCBkPSJNNDc4LjY0NiwxMjQuMTk2TDE4OS43NTQsNDEzLjA4N2MtNy45OTMsNy45OTItMTguMDQzLDEzLjQ0Mi0yOC45MDIsMTUuODcyYzkuMDY2LDYuNDI1LDE5Ljk1Niw5Ljk1NSwzMS4yMTUsOS45NTVsMCwwICAgYzE0LjMyLDAsMjguMDU3LTUuNjksMzguMTgyLTE1LjgxNmwyNzMuNjUtMjczLjY1TDQ3OC42NDYsMTI0LjE5NnoiLz4KPC9nPgo8cGF0aCBkPSJNMTkyLjA2OCw0NDcuMDE0Yy0xNi41ODcsMC0zMi4xODItNi40NTktNDMuOTEyLTE4LjE4OUwyLjM3MiwyODMuMDRjLTMuMTYzLTMuMTYzLTMuMTYzLTguMjkyLDAtMTEuNDU0bDc2LjM2Ni03Ni4zNjYgIGMzLjE2NC0zLjE2Myw4LjI5Mi0zLjE2MywxMS40NTUsMGwyOC42NjgsMjguNjY3YzMuMTYzLDMuMTYzLDMuMTYzLDguMjkyLDAsMTEuNDU0Yy0zLjE2NSwzLjE2My04LjI5MywzLjE2Mi0xMS40NTUsMGwtMjIuOTQtMjIuOTQgIGwtNjQuOTExLDY0LjkxMWwxNDAuMDU4LDE0MC4wNThjOC42NjksOC42NjksMjAuMTk1LDEzLjQ0MywzMi40NTYsMTMuNDQzYzEyLjI2LDAsMjMuNzg1LTQuNzc1LDMyLjQ1Ni0xMy40NDNsMTg2Ljk1MS0xODYuOTUyICBjMy4xNjMtMy4xNjMsOC4yOTEtMy4xNjQsMTEuNDU1LDBjMy4xNjMsMy4xNjMsMy4xNjMsOC4yOTIsMCwxMS40NTRMMjM1Ljk3OSw0MjguODI2ICBDMjI0LjI0OCw0NDAuNTU1LDIwOC42NTMsNDQ3LjAxNCwxOTIuMDY4LDQ0Ny4wMTR6Ii8+CjxwYXRoIGQ9Ik0xOTIuMDY4LDMxMC4yMzJjLTYuMzAzLDAtMTIuMjI4LTIuNDU0LTE2LjY4NC02LjkxMWwtNDUuMDY4LTQ1LjA2OGMtMy4xNjMtMy4xNjMtMy4xNjMtOC4yOTIsMC0xMS40NTQgIGMzLjE2NC0zLjE2Myw4LjI5Mi0zLjE2MywxMS40NTUsMGw0NS4wNjgsNDUuMDY4YzEuMzk2LDEuMzk2LDMuMjU0LDIuMTY1LDUuMjI5LDIuMTY1czMuODMzLTAuNzY5LDUuMjMtMi4xNjZMNDIxLjgwNiw2Ny4zNTcgIGMzLjE2NC0zLjE2Myw4LjI5Mi0zLjE2MywxMS40NTUsMGw3Ni4zNjYsNzYuMzY2YzEuNTE4LDEuNTE4LDIuMzcyLDMuNTc5LDIuMzcyLDUuNzI3cy0wLjg1Myw0LjIwOS0yLjM3Miw1LjcyN2wtNjMuNzg3LDYzLjc4NyAgYy0zLjE2NCwzLjE2My04LjI5MiwzLjE2Mi0xMS40NTUsMGMtMy4xNjMtMy4xNjMtMy4xNjMtOC4yOTIsMC0xMS40NTRsNTguMDYxLTU4LjA2bC02NC45MS02NC45MUwyMDguNzUyLDMwMy4zMjEgIEMyMDQuMjk1LDMwNy43NzcsMTk4LjM2OSwzMTAuMjMyLDE5Mi4wNjgsMzEwLjIzMnoiLz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
+                <h2 class="modal-heading">Ваша заявка успешно отправлена!</h2>
+            </div>
+            <div class="close-btn">+</div>
+        </div>
+    </div>
+
+    <div class="modal smart-tashkent-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <h2 class="title-secondary">Умный Ташкент</h2>
+            <div class="row-inner">
+                <div class="left">
+                    <p>Каждая программа представляет собой краткий курс знаний по какому-либо разделу химии, физики, биологии, медицины и других наук. На наших программах мы по-максимуму руководствуемся достижениями современной педагогики - квестовые и игровые механики, гаджеты и мультимедийное оборудование. В каждой из лабораторий мы проводим эксперименты с оригиналами приборов, которые используются учёными или, напрмер, медиками. Весь набор реквизитов у нас привозной, соответственно поставляется из заграницы. Дети проводят все опыты своими руками под чутким надзором 3х лаборантов. Программа длится 2 часа. За это время ваш ребёнок побывает в 4х лабораториях. Нашей основной целью является: Разбудить интерес к науке, что бы он задавался вопросами и находил на них научные обоснованные ответы, что бы ребёнок начал сам что-то изучать и проводить самостоятельные исследования.</p>
+                    <h3 class="heading text-center" style="margin-bottom: 5px;">Оставьте заявку</h3>
+                    <form class="form form-smart-tashkent">
+                        <input class="modal-input-name" type="text" name="name" placeholder="Ваше имя" required="true">
+                        <input class="modal-input-phone" type="tel" name="phone" placeholder="Ваш номер" required="true">
+                        <input type="hidden" name="hidden" value="Умный Ташкент">
+                        <button type="submit" class="btn-primary">Отправить</button>
+                    </form>
+                    <div class="socials" style="display: flex; justify-content: center;">
+                        <a target="_blank" style="color: #0dace8;" href="https://t.me/umniytashkent"><i class="fab fa-telegram"></i></a>
+                        <a target="_blank" style="color: #25d366;" href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a target="_blank" class="insta" href="https://instagram.com/umniytashkent"><i class="fab fa-instagram"></i></a>
+                        <a target="_blank" style="color: #3b5998;" href="https://www.facebook.com/umniytashkent/"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="right">
+                    <!-- <div class="swiper-container smart-tashkent-slider show-sm">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="./img/st-1.jpg" alt="Умный Ташкент"></div>
+                            <div class="swiper-slide"><img src="./img/st-2.jpg" alt="Умный Ташкент"></div>
+                            <div class="swiper-slide"><img src="./img/st-3.jpg" alt="Умный Ташкент"></div>
+                            <div class="swiper-slide"><img src="./img/st-4.jpg" alt="Умный Ташкент"></div>
+                            <div class="swiper-slide"><img src="./img/st-5.jpg" alt="Умный Ташкент"></div>
+                        </div>
+                    </div> -->
+                    <div class="gallery hide-sm">
+                        <img src="./img/st-1.jpg" class="img-1" alt="Умный Ташкент">
+                        <img src="./img/st-2.jpg" class="img-2" alt="Умный Ташкент">
+                        <img src="./img/st-3.jpg" class="img-3" alt="Умный Ташкент">
+                    </div>
+                </div>
+            </div>
+            <div class="close-btn">+</div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="menu">
+            <div class="menu-toggler">
+                <button class="togglebtn">
+                    <span class="line"></span>
+                </button>
+            </div>
+            <div class="menu-modal">
+                <div class="content">
+                    <ul class="list">
+                        <li class="item"><a href="#aboutus" class="link link-aboutus link-1">О нас</a></li>
+                        <li class="item"><a href="#courses" class="link link-courses link-2">Курсы</a></li>
+                        <li class="item"><a href="#partners" class="link link-advantages link-3">Партнёры</a></li>
+                        <li class="item"><a href="#contacts" class="link link-contacts link-4">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="logo">
+            <a href="#"><img src="./img/logo.png" alt=""></a>
+        </div>
+
+        <div class="navbar-contacts">
+            <div class="phone-call">
+                <a href="tel:+998946987752"><i class="fas fa-phone show-xs"></i> <span class="hide-xs">+998(94) 698-77-52</span></a>
+            </div>
+            <div class="telegram">
+                <a target="_blank" href="https://t.me/IAMGeniusX"><i class="fab fa-telegram-plane"></i> <span class="hide-sm">Написать в</span> <span class="hide-xs">Телеграм</span></a>
+            </div>
+        </div>
+
+    </nav>
+
+    <header class="fullpage header">
+        <div class="header-content">
+            <!-- <h1 class="page-title">Курсы спортивного запоминания и английского языка</h1> -->
+            <a href="#courses" class="btn-primary pulse">Посмотреть курсы</a>
+        </div>
+        <div id="particles-js"></div>
+        <div class="to-smart-tashkent pulse-black smart-tashkent-modal-btn">
+            <img src="./img/smart-tashkent.png" alt="Логотип Умный Ташкент">
+        </div>
+    </header>
+
+    <main>
+
+        <div id="aboutus" class="aboutus">
+            <div class="container-mini">
+                <div class="flex-between">
+                    <div class="title-content">
+                        <h3 class="heading">О нас</h3>
+                        <h2 id="main_desc" class="desc">Скорость, качество, результат.</h2>
+                        <a href="#contacts" class="btn-primary">Написать нам</a>
+                    </div>
+                    <div class="text-content">
+                        <p id="main_text">Центр развития памяти "Genius X" - это уникальная смесь различных развивающих курсов, как для взрослых, так и для детей. В нашем центре вы можете получить наивысшее качество обучения, потому что мы учитываем особенности обучаемости вашего мозга, более того, мы нацелены только на результат. Вы можете получить глубокие знания в предлагаемых нами курсах. А главное, за кратчайшие сроки. Вы сможете усовершенствовать своё запоминание и мышление с лучшими мнемонистами в СНГ. А касательно английского языка, вас будут обучать учителя с сертификатом Ielts 8 и более.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="courses" class="courses container">
+            <h2 class="block-title">Наши курсы</h2>
+            <div class="row-inner">
+                <div class="col-lg">
+                    <div data-aos="fade-right" class="course course-card-1">
+                        <div class="course-background"></div>
+                        <div class="course-content">
+                            <h3 class="title">Спортивное запоминание <span class="nowrap">(7-12) (13-17)</span></h3>
+                            <a data-modal-course="course-1" class="btn-secondary course-modal-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg">
+                    <div data-aos="fade-left" class="course course-card-2">
+                        <div class="course-background"></div>
+                        <div class="course-content">
+                            <h3 class="title">Мнемоника <span class="nowrap">(18-70)</span></h3>
+                            <a data-modal-course="course-2" class="btn-secondary course-modal-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="with-brain">
+                    <img src="./img/logo.png">
+                </div>
+                <div class="col-lg">
+                    <div data-aos="fade-right" class="course course-card-6">
+                        <div class="course-background"></div>
+                        <div class="course-content">
+                            <h3 class="title">Mnemo-IELTS <span class="nowrap">за 2 месяца</span> </h3>
+                            <a data-modal-course="course-3" class="btn-secondary course-modal-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg">
+                    <div data-aos="fade-left" class="course course-card-3">
+                        <div class="course-background"></div>
+                        <div class="course-content">
+                            <h3 class="title">Genereal-English за <span class="nowrap">2 месяца</span></h3>
+                            <a data-modal-course="course-4" class="btn-secondary course-modal-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal course-modal" data-course-active="">
+                <div class="modal-background"></div>
+                <div class="modal-content big">
+                    <div class="course-info course-1">
+                        <h3 class="title-secondary">Спортивное запоминание <span class="nowrap">(7-12) (13-17)</span></h3>
+                            <div class="pr" id="course-1-text"></div>
+                        <div class="flex-around">
+                            <div class="left">
+                                <ul>
+                                    <li>
+                                        <p class="prop">Продолжительность курса: </p>
+                                        <p class="value">3 месяца (3 раза в неделю) <br> по 1.5 часа занятие</p>
+                                    </li>
+                                    <li>
+                                        <p class="prop">Что входит в стоимость курса:</p>
+                                        <p class="value">2 учебника, 1 тетрадь</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <form class="form course-form">
+                                    <h3 class="heading">Оставьте заявку</h3>
+                                    <input class="modal-input-name" type="text" name="name" placeholder="Ваше имя" required="true">
+                                    <input class="modal-input-phone" type="tel" name="phone" placeholder="Ваш номер" required="true">
+                                    <input type="hidden" name="hidden" value="Спортивное запоминание (7-14)">
+                                    <input class="btn-primary" type="submit" value="Отправить">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-info course-2">
+                        <h3 class="title-secondary">Мнемоника (18-70)</h3>
+                        <div class="pr"  id="course-2-text">
+                            "Cпортивная мнемоника" детские курсы по развитию памяти. Практические методики по скоросному запоминанию различной информации. <br>
+                            Ребенку в современном обществе не совсем легко из-за отвлекающтх гаджетов и интернета. Это в свою очередь это порождает ряд проблем, таких как:<br>
+                                - плохая память<br>
+                                - низкая успеваемость в школе<br>
+                                - недисциплинированность<br>
+                                - рассеянность<br>
+                                - неумение сконцентрироваться на решаемой задаче<br>
+                                - неспособность к самообучению и т.д.. <br>
+                            Решение: «Спортивная мнемоника». Различные упражнения для развития памяти с методами международных стандартов, которые позволят развить у вашего ребенка «суперпамять», высокую концентрацию, умение к самообучению, любовь к чтению и высокие интеллектуальные способности. 
+                        </div>
+                        <div class="flex-around">
+                            <div class="left">
+                                <ul>
+                                    <li>
+                                        <p class="prop">Продолжительность курса: </p>
+                                        <p class="value">3 месяца (3 раза в неделю) <br> по 1.5 часа занятие</p>
+                                    </li>
+                                    <li class="hide-sm">
+                                        <p class="prop">Что входит в стоимость курса:</p>
+                                        <p class="value">2 учебника, 1 тетрадь</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <form class="form course-form">
+                                    <h3 class="heading">Оставьте заявку</h3>
+                                    <input class="modal-input-name" type="text" name="name" placeholder="Ваше имя" required="true">
+                                    <input class="modal-input-phone" type="tel" name="phone" placeholder="Ваш номер" required="true">
+                                    <input type="hidden" name="hidden" value="Курс по мнемонике (15-70)">
+                                    <input class="btn-primary" type="submit" value="Отправить">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-info course-3">
+                        <h3 class="title-secondary">Mnemo-IELTS за <span class="nowrap">2 месяца</span></h3>
+                        <div class="pr"  id="course-3-text">
+                            "Cпортивная мнемоника" детские курсы по развитию памяти. Практические методики по скоросному запоминанию различной информации. <br>
+                            Ребенку в современном обществе не совсем легко из-за отвлекающтх гаджетов и интернета. Это в свою очередь это порождает ряд проблем, таких как:<br>
+                                - плохая память<br>
+                                - низкая успеваемость в школе<br>
+                                - недисциплинированность<br>
+                                - рассеянность<br>
+                                - неумение сконцентрироваться на решаемой задаче<br>
+                                - неспособность к самообучению и т.д.. <br>
+                                Решение: «Спортивная мнемоника». Различные упражнения для развития памяти с методами международных стандартов, которые позволят развить у вашего ребенка «суперпамять», высокую концентрацию, умение к самообучению, любовь к чтению и высокие интеллектуальные способности. 
+                        </div>
+                        <div class="flex-around">
+                            <div class="left">
+                                <ul>
+                                    <li>
+                                        <p class="prop">Продолжительность курса: </p>
+                                        <p class="value">3 месяца (3 раза в неделю) <br> по 1.5 часа занятие</p>
+                                    </li>
+                                    <li>
+                                        <p class="prop">Что входит в стоимость курса:</p>
+                                        <p class="value">2 учебника, 1 тетрадь</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <form class="form course-form">
+                                    <h3 class="heading">Оставьте заявку</h3>
+                                    <input class="modal-input-name" type="text" name="name" placeholder="Ваше имя" required="true">
+                                    <input class="modal-input-phone" type="tel" name="phone" placeholder="Ваш номер" required="true">
+                                    <input type="hidden" name="hidden" value="Спортивное запоминание (7-14)">
+                                    <input class="btn-primary" type="submit" value="Отправить">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-info course-4">
+                        <h3 class="title-secondary">Genereal-English за <span class="nowrap">2 месяца</span></h3>
+                        <div class="pr" id="course-4-text">
+                            "Cпортивная мнемоника" детские курсы по развитию памяти. Практические методики по скоросному запоминанию различной информации. <br>
+                            Ребенку в современном обществе не совсем легко из-за отвлекающтх гаджетов и интернета. Это в свою очередь это порождает ряд проблем, таких как:<br>
+                                - плохая память<br>
+                                - низкая успеваемость в школе<br>
+                                - недисциплинированность<br>
+                                - рассеянность<br>
+                                - неумение сконцентрироваться на решаемой задаче<br>
+                                - неспособность к самообучению и т.д.. <br>
+                                Решение: «Спортивная мнемоника». Различные упражнения для развития памяти с методами международных стандартов, которые позволят развить у вашего ребенка «суперпамять», высокую концентрацию, умение к самообучению, любовь к чтению и высокие интеллектуальные способности. 
+                        </div>
+                        <div class="flex-around">
+                            <div class="left">
+                                <ul>
+                                    <li>
+                                        <p class="prop">Продолжительность курса: </p>
+                                        <p class="value">3 месяца (3 раза в неделю) <br> по 1.5 часа занятие</p>
+                                    </li>
+                                    <li>
+                                        <p class="prop">Что входит в стоимость курса:</p>
+                                        <p class="value">2 учебника, 1 тетрадь</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <form class="form course-form">
+                                    <h3 class="heading">Оставьте заявку</h3>
+                                    <input class="modal-input-name" type="text" name="name" placeholder="Ваше имя" required="true">
+                                    <input class="modal-input-phone" type="tel" name="phone" placeholder="Ваш номер" required="true">
+                                    <input type="hidden" name="hidden" value="Спортивное запоминание (7-14)">
+                                    <input class="btn-primary" type="submit" value="Отправить">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="close-btn">+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="banner text-center">
+            <h2 class="title-secondary">Оставьте заявку и мы свами свяжемся!</h2>
+            <button data-modal-target="Заказ звонока" class="btn-primary call-order-modal-btn">Оставить заявку</button>
+        </div>
+
+        <div id="partners" class="partners container">
+            <h2 class="block-title">Наши партнёры</h2>
+            <div class="container-mini">
+                <div class="swiper-container parters-slider">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="./img/webp/mft.webp" type="image/webp">
+                                <img src="./img/mft.jpg" alt="Тошкент шахар мнемоспорт федерацияси">
+                            </picture>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="./img/webp/1-kanal.webp" onerror="this.onerror=null; this.src='./img/1-kanal.png'" alt="Первый канал">
+                        </div>
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="./img/webp/russia1.webp" type="image/webp">
+                                <img src="./img/russia1.png" alt="Россия 1">
+                            </picture>
+                        </div>
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="./img/webp/ibn-sino-logo.webp" type="image/webp">
+                                <img src="./img/ibn-sino-logo.jpg" alt="Ибн-Сино мактаби">
+                            </picture>
+                        </div>
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="./img/webp/smart-tashkent-logo.webp" type="image/webp">
+                                <img src="./img/smart-tashkent-logo.jpg" alt="Умный Ташкент">
+                            </picture>
+                        </div>
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="./img/webp/tm-logo.webp" type="image/webp">
+                                <img src="./img/tm-logo.jpg" alt="Умный Ташкент">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contacts" class="contacts container">
+            <div class="section-content">
+                <h2 class="title-primary">Контакты</h2>
+                <div class="row-inner">
+                    <div class="contact-form">
+                        <h2 class="title-secondary">Оставьте заявку</h2>
+                        <form class="flex-between form">
+                            <label class="label-name">
+                                <input type="text" name="name" placeholder="Ваше имя" class="form-input input-name" required />
+                                <p class="errorField">
+                                    <span class="empty">Пожалуйста заполните поле</span>
+                                    <span class="numbers">Поле не должно содержать номера</span>
+                                    <span class="length">Не менее чем 2 буквы</span>
+                                </p>
+                            </label>
+                            <label class="label-phone">
+                                <input type="tel" name="phone" placeholder="Ваш номер" class="form-input input-phone" required />
+                                <p class="errorField">
+                                    <span class="empty">Пожалуйста заполните поле</span>
+                                    <span class="letters">Поле не должно содержать букв</span>
+                                    <span class="length">Не менее чем 9 символов</span>
+                                </p>
+                            </label>
+                            <label class="label-email">
+                                <input type="email" name="email" placeholder="Ваш email (не обязательно)" class="form-input input-email" />
+                                <p class="errorField">
+                                    <span class="empty">Пожалуйста заполните поле</span>
+                                    <span class="length">Не менее чем 7 символов</span>
+                                    <span class="validEmail">Введите валидный email адресс!</span>
+                                </p>
+                            </label>
+                            <label class="label-textarea">
+                                <textarea name="message" placeholder="Ваше сообщение" class="form-input input-textarea" required></textarea>
+                                <p class="errorField">
+                                    <span class="empty">Пожалуйста заполните поле</span>
+                                </p>
+                            </label>
+                            <div class="text-center">
+                                <button type="submit" disabled class="input-submit btn-primary">Отправить</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <div class="row-inner">
+                            <div class="info-line">
+                                <h4 class="heading">Email</h4>
+                                <p class="value"><a href="mailto:Geniustash@mail.ru">Geniustash@mail.ru</a></p>
+                            </div>
+
+                            <div class="info-line">
+                                <h4 class="heading">Телефон</h4>
+                                <p class="value"><a href="tel:+998946987752">+998(94) 698-77-52</a></p>
+                                <p class="value"><a href="tel:+998907889922">+998(90) 788-99-22</a></p>
+                            </div>
+
+                            <div class="info-line">
+                                <h4 class="heading">Адрес</h4>
+                                <p class="value">Проспект Амира Темира 46а</p>
+                            </div>
+
+                            <div class="info-line">
+                                <h4 class="heading">Время работы</h4>
+                                <p class="value">Пн-Вс 09:00 до 21:00</p>
+                            </div>
+                            <div class="info-line">
+                                <h4 class="heading">Соц. сети</h4>
+                                <div class="value">
+                                    <div class="socials">
+                                        <a target="_blank" style="color: #0dace8;" href="https://t.me/IAMGeniusX"><i class="fab fa-telegram"></i></a>
+                                        <a target="_blank" style="color: #25d366;" href="#"><i class="fab fa-whatsapp"></i></a>
+                                        <a target="_blank" class="insta" href="https://www.instagram.com/geniusx.uz/"><i class="fab fa-instagram"></i></a>
+                                        <a target="_blank" style="color: #3b5998;" href="https://www.facebook.com/geniusx.uz"><i class="fab fa-facebook"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="map">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.296599061985!2d69.28018594350972!3d41.32416338534165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b342b20b795%3A0xa864984affd3e36a!2s46%D0%B0%20Amir%20Temur%20Avenue%2C%20Tashkent%2C%20Uzbekistan!5e0!3m2!1sen!2s!4v1575461591493!5m2!1sen!2s" allowfullscreen=""></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <nav data-aos="fade-down" class="nav-footer">
+                <div class="flex-between">
+                    <div class="logo">
+                        <a href="#"><img src="./img/logo.png" alt="Логотип Geniusx.uz"></a>
+                    </div>
+                    <div class="links">
+                        <a href="#aboutus" class="link">О нас</a>
+                        <a href="#courses" class="link">Курсы</a>
+                        <a href="#partners" class="link">Партнёры</a>
+                        <a href="#contacts" class="link">Контакты</a>
+                    </div>
+                </div>
+                <div class="flex-between mt30">
+                    <div class="phone-call">
+                        <a href="tel:+998946987752">+998(94) 698-77-52</a>
+                        <a href="tel:+998907889922">+998(90) 788-99-22</a>
+                        <a href="mailto:Geniustash@mail.ru">Geniustash@mail.ru</a>
+                    </div>
+                    <div class="socials">
+                        <a href="https://t.me/IAMGeniusX"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/geniusx.uz/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/geniusx.uz"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </footer>
+
+
+    <!-- Js scripts -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js'></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'></script>
+
+    <script src="./js/script.js"></script>
+    <script src="./js/form-validation.js"></script>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            disable: 'mobile'
+        });
+
+        let smartTashkentSlider = new Swiper('.swiper-container.smart-tashkent-slider', {
+            autoplay: {
+                delay: 3000
+            }
+        });
+    </script>
+</body>
+</html>
